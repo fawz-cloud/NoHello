@@ -5,7 +5,6 @@
 #include <atomic>
 
 #include <api/system_properties.h>
-#include <api/_system_properties.h>
 #include <system_properties/prop_info.h>
 
 #include <android/log.h>
