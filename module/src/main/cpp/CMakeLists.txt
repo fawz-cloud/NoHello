@@ -17,5 +17,6 @@ set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${LINKER_FLAGS}")
 
 add_library(${MODULE_NAME} SHARED nohello.cpp)
 target_link_libraries(${MODULE_NAME} cxx log)
+target_include_directories(${MODULE_NAME} PRIVATE external/elfio)
 
 add_subdirectory(external)
