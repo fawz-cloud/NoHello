@@ -4,3 +4,6 @@
 [submodule "module/src/main/cpp/external/elfio"]
 	path = module/src/main/cpp/external/elfio
 	url = https://github.com/serge1/ELFIO.git
+[submodule "module/src/main/cpp/external/system_properties"]
+	path = module/src/main/cpp/external/system_properties
+	url = https://github.com/topjohnwu/system_properties.git
