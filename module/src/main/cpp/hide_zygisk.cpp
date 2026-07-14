@@ -7,6 +7,7 @@
 #include <fstream>
 #include <string>
 
+#include <android/log.h>
 #include <elfio/elfio.hpp>
 #include "log.h"
 
