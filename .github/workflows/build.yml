@@ -47,6 +47,16 @@ jobs:
           unzip module/release/Nohello-v*-release.zip -d module-release
           unzip module/release/Nohello-v*-debug.zip -d module-debug
 
+      - name: Publish GitHub release
+        if: success() && github.event_name != 'pull_request'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.prepareArtifact.outputs.releaseName }}
+          name: ${{ steps.prepareArtifact.outputs.releaseName }}
+          files: |
+            module/release/Nohello-v*-release.zip
+            module/release/Nohello-v*-debug.zip
+
       - name: Upload release
         uses: actions/upload-artifact@v4
         with:

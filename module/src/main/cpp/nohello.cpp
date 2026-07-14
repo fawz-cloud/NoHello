@@ -47,7 +47,12 @@ static constexpr off_t EXT_MAGIC_OFFSET = 0x38;
 static constexpr off_t EXT_ERRORS_OFFSET = 0x3C;
 static constexpr uint16_t EXT_MAGIC = 0xEF53;
 static const std::vector<std::string> defaultRules = {
-		R"(source { "KSU", "APatch", "magisk", "worker" } fs { "tmpfs" "overlay" })"
+		R"(source { "KSU", "APatch", "magisk", "worker" } fs { "tmpfs" "overlay" })",
+		// Catch module bind-mounts (e.g. a module bind-mounting its own dex2oat
+		// over /apex/.../bin/dex2oat) whose backing root lives under /data/adb.
+		// The source/fs rule above misses these because they inherit the data
+		// partition's fs type and block device rather than a KSU/magisk source.
+		R"(root { "/data/adb/*" })"
 };
 
 enum Advice {
