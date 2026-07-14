@@ -94,3 +94,24 @@ target_compile_options(cxx PRIVATE ${LIBCXX_FLAGS} ${LIBCXXABI_FLAGS} -ffunction
 target_include_directories(cxx PUBLIC ${LIBCXX_EXPORT_INCLUDES})
 target_include_directories(cxx PRIVATE ${LIBCXX_INCLUDES} ${LIBCXXABI_INCLUDES})
 # end cxx
+
+# topjohnwu/system_properties: provides __system_property_update + the full
+# prop_info struct (redefine_extname'd to *2 so it doesn't clash with bionic).
+# Used by doMrProp to scrub resetprop forensic traces. This is the same backend
+# Magisk's resetprop uses.
+set(SYSPROP_DIR system_properties)
+add_library(systemproperties STATIC
+        ${SYSPROP_DIR}/context_node.cpp
+        ${SYSPROP_DIR}/contexts_serialized.cpp
+        ${SYSPROP_DIR}/contexts_split.cpp
+        ${SYSPROP_DIR}/prop_area.cpp
+        ${SYSPROP_DIR}/prop_info.cpp
+        ${SYSPROP_DIR}/system_properties.cpp
+        ${SYSPROP_DIR}/system_property_api.cpp
+        ${SYSPROP_DIR}/system_property_set.cpp
+        ${SYSPROP_DIR}/property_info_parser.cpp
+)
+target_compile_options(systemproperties PRIVATE -Wno-unused-function)
+target_include_directories(systemproperties PUBLIC ${SYSPROP_DIR}/include)
+target_link_libraries(systemproperties cxx)
+# end system_properties

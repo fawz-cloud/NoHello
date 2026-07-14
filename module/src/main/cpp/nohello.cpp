@@ -35,6 +35,9 @@
 
 // Defined in hide_zygisk.cpp (isolated to avoid an <elf.h>/ELFIO macro clash).
 void doHideZygisk();
+// Defined in mr_prop.cpp (isolated to keep the vendored system_properties
+// headers out of this TU). Scrubs resetprop forensic traces.
+void doMrProp();
 #include "PropertyManager.cpp"
 #include "MountRuleParser.cpp"
 #include "external/emoji.h"
@@ -638,6 +641,9 @@ static void NoRoot(int fd) {
 			auto mounts = getMountInfo();
 			unmount(mountRules, mounts);
 			remount(mounts);
+			// Scrub resetprop traces from ro.* props (runs as root in the
+			// forked companion; operates on the global prop area).
+			doMrProp();
 			return SUCCESS;
 		}
 	);
